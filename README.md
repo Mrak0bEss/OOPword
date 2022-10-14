@@ -116,7 +116,7 @@ python main.py --mode train --fast --data_dir path/to/iam  --batch_size 250 --ea
 Модель представляет собой урезанную версию системы HTR, которую я внедрил для [моей диссертации]((https://repositum.tuwien.ac.at/obvutwhs/download/pdf/2874742 )).
 Остается лишь минимум для распознавания текста с приемлемой точностью.
 Он состоит из 5 слоев CNN, 2 слоев RNN (LSTM) и слоя потери и декодирования CTC.
-Для получения более подробной информации смотрите эту [статью Medium](https://towards данные science.com/2326a3487cd5 ).
+Для получения более подробной информации смотрите эту [статью Medium](https://towardsdatascience.com/2326a3487cd5 ).
 
 
 ## References
