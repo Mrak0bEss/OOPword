@@ -1,27 +1,27 @@
-# Handwritten Text Recognition with TensorFlow
+# Распознавание рукописного текста с помощью TensorFlow
 
 
-Handwritten Text Recognition (HTR) system implemented with TensorFlow (TF) and trained on the IAM off-line HTR dataset.
-The model takes **images of single words or text lines (multiple words) as input** and **outputs the recognized text**.
-3/4 of the words from the validation-set are correctly recognized, and the character error rate is around 10%.
+Система распознавания рукописного текста (HTR), реализованная с помощью TensorFlow (TF) и обученная на базе автономного набора данных HTR I AM.
+Модель принимает ** изображения отдельных слов или текстовых строк (нескольких слов) в качестве входных данных ** и ** выводит распознанный текст **.
+3/4 слов из набора проверки распознаны правильно, а частота ошибок символов составляет около 10%.
 
 ![htr](./doc/htr.png)
 
 
-## Run demo
+## Запустить демо-версию
 
-* Download one of the pretrained models
-  * [Model trained on word images](https://www.dropbox.com/s/mya8hw6jyzqm0a3/word-model.zip?dl=1): 
-    only handles single words per image, but gives better results on the IAM word dataset
-  * [Model trained on text line images](https://www.dropbox.com/s/7xwkcilho10rthn/line-model.zip?dl=1):
-    can handle multiple words in one image
-* Put the contents of the downloaded zip-file into the `model` directory of the repository  
-* Go to the `src` directory 
-* Run inference code:
-  * Execute `python main.py` to run the model on an image of a word
-  * Execute `python main.py --img_file ../data/line.png` to run the model on an image of a text line
+* * Загрузите одну из предварительно обученных моделей
+* [Модель, обученная на словесных изображениях](https://www.dropbox.com/s/mya8hw6jyzqm0a3/word-model.zip?dl=1 ):
+обрабатывает только отдельные слова для каждого изображения, но дает лучшие результаты в наборе данных IAM word
+* [Модель, обученная на изображениях текстовых строк](https://www.dropbox.com/s/7xwkcilho10rthn/line-model.zip?dl=1 ):
+может обрабатывать несколько слов в одном изображении
+* Поместите содержимое загруженного zip-файла в каталог `model` репозитория
+* Перейдите в каталог `src`
+* Запустите код вывода:
+* Выполнить `python main.py ` чтобы запустить модель на изображении слова
+* Выполнить `python main.py --img_file ../data/line.png` для запуска модели на изображении текстовой строки
 
-The input images, and the expected outputs are shown below when the text line model is used.
+Входные изображения и ожидаемые выходные данные показаны ниже при использовании модели текстовых строк.
 
 ![test](./data/word.png)
 ```
@@ -52,10 +52,9 @@ Probability: 0.6674373149871826
 
 
 ## Integrate word beam search decoding
-
-The [word beam search decoder](https://repositum.tuwien.ac.at/obvutwoa/download/pdf/2774578) can be used instead of the two decoders shipped with TF.
-Words are constrained to those contained in a dictionary, but arbitrary non-word character strings (numbers, punctuation marks) can still be recognized.
-The following illustration shows a sample for which word beam search is able to recognize the correct text, while the other decoders fail.
+[Декодер поиска по словесному лучу](https://repositum.tuwien.ac.at/obvutwoa/download/pdf/2774578 ) может использоваться вместо двух декодеров, поставляемых с TF.
+Слова ограничены теми, которые содержатся в словаре, но произвольные строки символов, не состоящие из слов (цифры, знаки препинания), все еще могут быть распознаны.
+На следующем рисунке показан образец, для которого word beam search способен распознать правильный текст, в то время как другие декодеры терпят неудачу.
 
 ![decoder_comparison](./doc/decoder_comparison.png)
 
