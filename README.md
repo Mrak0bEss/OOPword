@@ -2,13 +2,13 @@
 
 
 Система распознавания рукописного текста (HTR), реализованная с помощью TensorFlow (TF) и обученная на базе автономного набора данных HTR I AM.
-Модель принимает ** изображения отдельных слов или текстовых строк (нескольких слов) в качестве входных данных ** и ** выводит распознанный текст **.
+Модель принимает ** изображения отдельных слов или текстовых строк (нескольких слов) в качестве входных данных  и выводит распознанный текст .
 3/4 слов из набора проверки распознаны правильно, а частота ошибок символов составляет около 10%.
 
 ![htr](./doc/htr.png)
 
 
-## Запустить демо-версию
+## Запук демо-версию
 
 * * Загрузите одну из предварительно обученных моделей
 * [Модель, обученная на словесных изображениях](https://www.dropbox.com/s/mya8hw6jyzqm0a3/word-model.zip?dl=1 ):
@@ -40,7 +40,7 @@ Recognized: "or work on line level"
 Probability: 0.6674373149871826
 ```
 
-## Command line arguments
+## Аргументы командной строки
 * `--mode`: select between "train", "validate" and "infer". Defaults to "infer".
 * `--decoder`: select from CTC decoders "bestpath", "beamsearch" and "wordbeamsearch". Defaults to "bestpath". For option "wordbeamsearch" see details below.
 * `--batch_size`: batch size.
@@ -50,45 +50,43 @@ Probability: 0.6674373149871826
 * `--img_file`: image that is used for inference.
 * `--dump`: dumps the output of the NN to CSV file(s) saved in the `dump` folder. Can be used as input for the [CTCDecoder](https://github.com/githubharald/CTCDecoder).
 
-
-## Integrate word beam search decoding
+## Интегрируйте декодирование поиска по лучу слова
 [Декодер поиска по словесному лучу](https://repositum.tuwien.ac.at/obvutwoa/download/pdf/2774578 ) может использоваться вместо двух декодеров, поставляемых с TF.
 Слова ограничены теми, которые содержатся в словаре, но произвольные строки символов, не состоящие из слов (цифры, знаки препинания), все еще могут быть распознаны.
 На следующем рисунке показан образец, для которого word beam search способен распознать правильный текст, в то время как другие декодеры терпят неудачу.
 
 ![decoder_comparison](./doc/decoder_comparison.png)
 
-Follow these instructions to integrate word beam search decoding:
+Следуйте этим инструкциям, чтобы интегрировать декодирование поиска по word beam:
 
-1. Clone repository [CTCWordBeamSearch](https://github.com/githubharald/CTCWordBeamSearch)
-2. Compile and install by running `pip install .` at the root level of the CTCWordBeamSearch repository
-3. Specify the command line option `--decoder wordbeamsearch` when executing `main.py` to actually use the decoder
+1. Клонировать репозиторий [CTCWordBeamSearch](https://github.com/githubharald/CTCWordBeamSearch )
+2. Скомпилируйте и установите, запустив `pip install .` на корневом уровне репозитория CTCWordBeamSearch
+3. Укажите параметр командной строки `--поиск по лучу слова декодера` при выполнении `main.py ` чтобы на самом деле использовать декодер
 
-The dictionary is automatically created in training and validation mode by using all words contained in the IAM dataset (i.e. also including words from validation set) and is saved into the file `data/corpus.txt`.
-Further, the manually created list of word-characters can be found in the file `model/wordCharList.txt`.
-Beam width is set to 50 to conform with the beam width of vanilla beam search decoding.
+Словарь автоматически создается в режиме обучения и проверки с использованием всех слов, содержащихся в наборе данных IAM (т.е. также включая слова из набора проверки), и сохраняется в файл `data/corpus.txt `.
+Далее, созданный вручную список слов-символов можно найти в файле `model/wordCharList.txt `.
+Ширина луча установлена равной 50, чтобы соответствовать ширине луча при декодировании поиска по ванильному лучу.
 
+## Обучающая модель на наборе данных IAM
 
-## Train model on IAM dataset
+### Подготовить набор данных
+Следуйте этим инструкциям, чтобы получить набор данных IAM:
 
-### Prepare dataset
-Follow these instructions to get the IAM dataset:
+* * Зарегистрируйтесь бесплатно на этом [веб-сайте](http://www.fk.inf.unibe.ch/databases/iam-handwriting-database )
+* Скачать `слова/words.tgz`
+* Скачать `ascii/words.txt `
+* Создайте каталог для набора данных на вашем диске и создайте два подкаталога: `img` и `gt`
+* Положить `words.txt ` в каталог `gt`
+* Поместите содержимое (каталоги `a01`, `a02`, ...) `words.tgz` в каталог `img`.
 
-* Register for free at this [website](http://www.fki.inf.unibe.ch/databases/iam-handwriting-database)
-* Download `words/words.tgz`
-* Download `ascii/words.txt`
-* Create a directory for the dataset on your disk, and create two subdirectories: `img` and `gt`
-* Put `words.txt` into the `gt` directory
-* Put the content (directories `a01`, `a02`, ...) of `words.tgz` into the `img` directory
+### Тренировка бега
 
-### Run training
-
-* Delete files from `model` directory if you want to train from scratch
-* Go to the `src` directory and execute `python main.py --mode train --data_dir path/to/IAM`
-* The IAM dataset is split into 95% training data and 5% validation data  
-* If the option `--line_mode` is specified, 
-  the model is trained on text line images created by combining multiple word images into one  
-* Training stops after a fixed number of epochs without improvement
+* Удалите файлы из каталога "модель", если вы хотите тренироваться с нуля
+* * Перейдите в каталог `src` и запустите `python main.py --модельный поезд --data_dir путь/к/Я ЕСТЬ`
+* Набор данных IAM разделен на 95% обучающих данных и 5% проверочных данных  
+* Если указана опция `--line_mode`,
+модель обучается на изображениях текстовых строк, созданных путем объединения нескольких изображений word в одно  
+* Обучение прекращается после фиксированного количества эпох без улучшения
 
 The pretrained word model was trained with this command on a GTX 1050 Ti:
 ```
